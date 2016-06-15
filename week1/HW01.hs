@@ -27,14 +27,15 @@ doubleEveryOther n = n
 
 -- Calculate the sum of all the digits in every Integer.
 sumDigits :: [Integer] -> Integer
-sumDigits n = sum n
+sumDigits (x:xs) = sum(toRevDigits x) + (sumDigits xs)
+sumDigits n = 0
 
 
 -- Exercise 5 -----------------------------------------
 
 -- Validate a credit card number using the above functions.
 luhn :: Integer -> Bool
-luhn = undefined
+luhn n = sumDigits (doubleEveryOther (toRevDigits n)) `mod` 10 == 0
 
 -- Exercise 6 -----------------------------------------
 
