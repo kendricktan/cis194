@@ -21,8 +21,8 @@ parseMessageType s
         x  = read (s !! 1) :: Int
 
 parseLogMessage :: Maybe MessageType -> [String] -> LogMessage
-parseLogMessage Nothing  s = Unknown (intercalate " " s)
-parseLogMessage (Just a) s = LogMessage a (read ts :: Int) (intercalate " " rs)
+parseLogMessage Nothing  s = Unknown (unwords s)
+parseLogMessage (Just a) s = LogMessage a (read ts :: Int) (unwords rs)
   where nn = filterNonNumbers s -- Non Numbers
         ts = (head . reverse) nn   -- Time Stamp
         rs = (drop 1 $ filterNumbers s)
@@ -32,3 +32,6 @@ parseMessage :: String -> LogMessage
 parseMessage s = parseLogMessage pmt wl
   where wl = words s
         pmt = parseMessageType wl
+
+parse :: String -> [LogMessage]
+parse s = map parseMessage (lines s)
