@@ -23,7 +23,7 @@ parseLogMessage :: Maybe MessageType -> [String] -> LogMessage
 parseLogMessage Nothing  s = Unknown (unwords s)
 parseLogMessage (Just a) s = LogMessage a (read ts :: Int) (unwords rs)
   where nn = filterNonNumbers s -- Non Numbers
-        ts = (head . reverse) nn   -- Time Stamp
+        ts = last nn   -- Time Stamp
         rs = if (toLower . head . head) s == 'e'
              then drop 3 s
              else drop 2 s
