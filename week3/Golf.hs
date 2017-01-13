@@ -21,3 +21,22 @@ localMaxima (x:y:z:s) = if isMaxima x y z
                           then y : localMaxima (y : z : s)
                           else localMaxima (y : z : s)
 localMaxima _ = []
+
+-- Exercise 3 --
+--
+-- Finds out the frequency of the numbers in accending order
+occurence :: [Integer] -> [Int]
+occurence k = [length (filter (n ==) k) | n <- [0..9]]
+
+-- Occurence 2 string
+o2s :: [Int] -> Int -> String
+o2s [] _ = ""
+o2s (x:xs) t = if x >= t then "*" ++ o2s xs t else " " ++ o2s xs t
+
+-- Hmm need state
+stateo2s :: [Int] -> Int -> String
+stateo2s l i = if i > 0 then o2s l i ++ "\n" ++ stateo2s l (i-1) else "==========\n0123456789\n"
+
+histogram :: [Integer] -> String
+histogram n = stateo2s fn (maximum fn)
+  where fn = occurence n
