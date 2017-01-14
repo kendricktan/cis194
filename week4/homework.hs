@@ -23,3 +23,16 @@ tinsert (Node n b c d)    a
 
 foldTree :: [a] -> Tree a
 foldTree = foldl tinsert Leaf
+
+-- Exercise 3 --
+-- Returns True if there are an odd number of True values
+xor :: [Bool] -> Bool
+xor = foldl (\x y -> not x) False . filter (True==)
+
+map' :: (a -> b) -> [a] -> [b]
+map' f [] = []
+map' f x = foldr (\y ys -> f y : ys) [] x
+
+foldl' :: (a -> b -> a) -> a -> [b] -> a
+foldl' f = foldr (flip f) 
+
