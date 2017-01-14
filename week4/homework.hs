@@ -1,3 +1,5 @@
+import Data.List
+
 -- Exercise 1 --
 fun1 :: [Integer] -> Integer
 fun1 = product . map (2 -) . filter even
@@ -36,3 +38,8 @@ map' f x = foldr (\y ys -> f y : ys) [] x
 foldl' :: (a -> b -> a) -> a -> [b] -> a
 foldl' f = foldr (flip f) 
 
+-- Exercise 4 --
+-- Finds prime numbers using Sieve of Sundaram
+sieveSundaram :: Integer -> [Integer]
+sieveSundaram n = tail . map (\x -> (2*x) + 1) $ foldr (\x y -> if x `elem` sn then y else x:y) [] [0..n]
+    where sn = takeWhile (((2*n)+2)>=) $ map head . group $ sort [i + j + (2 * i * j) | i <- [1..n], j <- [1..n]]
