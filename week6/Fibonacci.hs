@@ -36,4 +36,10 @@ streamFromSeed f x = Cons (f x) (streamFromSeed f (f x))
 nats :: Stream Integer
 nats = streamFromSeed (+1) 0
 
+interleaveStreams :: Stream a -> Stream a -> Stream a
+interleaveStreams (Cons x xs) (Cons y ys) = Cons x (Cons y (interleaveStreams xs ys))
 
+ruler :: Stream Integer
+ruler = interleaveStreams (streamRepeat 0) b
+    where a = interleaveStreams (streamRepeat 2) (streamFromSeed (+1) 2)
+          b = interleaveStreams (streamRepeat 1) a
