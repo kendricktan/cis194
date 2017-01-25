@@ -62,4 +62,19 @@ instance Fractional (Stream Integer) where
     (/) (Cons x xs) (Cons y ys) = q
         where q = Cons (x `div` y) (streamMap (`div` y) (xs - q * ys))
 
+fibs3 :: Stream Integer
+fibs3 = x / (1 - x - (x * x))
 
+-- Exercise 7 --
+newtype Matrix = Matrix ((Integer, Integer), (Integer, Integer)) deriving (Show)
+
+instance Num Matrix where
+    (*) (Matrix ((a, b), (c, d))) (Matrix ((e, f), (g, h)))
+      = Matrix (((a*e)+(b*g), (a*f)+(b*h)), ((c*e)+(d*g), (c*f)+(d*h)))
+
+fib4 :: Integer -> Integer
+fib4 0 = 0
+fib4 n = fibn $ Matrix ((1, 1), (1, 0)) ^ n
+
+fibn :: Matrix -> Integer
+fibn (Matrix (a, _)) = snd a
